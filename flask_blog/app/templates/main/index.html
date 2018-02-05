@@ -1,0 +1,50 @@
+{% extends "common/base.html" %}
+{% from "common/macro.html" import pagination_show %}
+{% block title %}发表首页{% endblock %}
+
+{% block page_content %}
+    <div class="container">
+        {{ wtf.quick_form(form) }}
+        {% for p in posts %}
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{{ url_for('static',filename = 'upload/'+p.user.icon) }}"
+                             alt="头像" style="width: 80px; height: 80px;border-radius: 64px">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" style="color: salmon">{{ p.user.username }}</h4>
+                    <a href="{{ url_for('posts.comment', id=p.id) }}">{{ p.content }}</a>
+                    {% if current_user.is_authenticated %}
+                    <div class="collect"  url="{{ url_for('posts.collect',pid=p.id) }}" style=" color: salmon;cursor: pointer;float: right">{% if current_user.is_favorite(p.id) %}已收藏{% else %}收藏{% endif %}</div><br/>
+                        <div style="color: salmon;cursor: pointer;float: right"><a href="{{ url_for('posts.comment',id=p.id) }}">评论</a></div><br/>
+                    {% endif %}
+
+                </div>
+                <div style="float: right;color: salmon;cursor: pointer;"> {{ moment(p.timestamp).format('LLL') }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{# 显示分页导航条，想构造额外的GET参数，直接写在调用宏的地方即可 , username='xiaoming' #}
+{{ pagination_show(pagination,'main.index') }}
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        $(function(){
+            $('.collect').click(function () {
+                _this = this
+                $.get($(_this).attr('url'),function () {
+                    if ($(_this).text()=='收藏'){
+                        $(_this).text("已收藏")
+                    }else {
+                        $(_this).text("收藏")
+                    }
+                })
+            })
+        })
+    
+    
+    </script>
+{% endblock %}

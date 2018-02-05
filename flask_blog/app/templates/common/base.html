@@ -1,0 +1,82 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{# 定制标题 #}
+{% block title %} 默认标题 {% endblock %}
+
+{# 定制导航条 #}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse" style="border-radius: 0px;">
+{#        <img src="{{ url_for('static',filename='img/head.jpg') }}" style="width: 100%;height: 50px;">#}
+
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target=".navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('main.index') }}">首页</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('posts.mine_publish') }}">我的发表</a></li>
+                    <li><a href="{{ url_for('posts.mine_collect') }}">我的收藏</a></li>
+                    <li><a href="{{ url_for('posts.comment_my') }}">评论我的</a></li>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_authenticated %}
+                        <li><a style="color: white" href="{{ url_for('user.logout') }}">退出</a></li>
+                        <li class="dropdown">
+                            <a style="color: white" href="#" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true"
+                               aria-expanded="false">{{ current_user.username }}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('user.userinfo') }}">用户信息</a></li>
+                            <li><a href="{{ url_for('user.change_password') }}">修改密码</a></li>
+                            <li><a href="{{ url_for('user.change_email') }}">修改邮箱</a></li>
+                            <li><a href="{{ url_for('user.change_icon') }}">上传/修改头像</a></li>
+                        </ul>
+                            {% else %}
+                        <li><a href="{{ url_for('user.register') }}">注册</a></li>
+                        <li><a href="{{ url_for('user.login') }}">登录</a></li>
+                    {% endif %}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        {# flash消息 #}
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# 页面内容 #}
+        {% block page_content %}默认内容{% endblock %}
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+{#    {{ moment.locale('zh-CN') }}#}
+
+{% endblock %}

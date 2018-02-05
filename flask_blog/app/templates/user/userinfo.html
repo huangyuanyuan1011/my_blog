@@ -1,0 +1,13 @@
+{% extends "common/base.html" %}
+
+
+{% block title %}用户信息{% endblock %}
+
+{% block page_content %}
+
+    <div class="alert alert-success" role="alert"><h4>用户信息展示</h4></div>
+    <div class="alert alert-info" role="alert">用户名：{{ current_user.username }}</div>
+    <div class="alert alert-warning" role="alert">邮箱：{{ current_user.email }}</div>
+    <div class="alert alert-success" role="alert">个性签名：纸上得来终觉浅，绝知此事要躬行！</div>
+    <div class="alert alert-danger" role="alert">地址：上海市浦东新区中国平安</div>
+{% endblock %}

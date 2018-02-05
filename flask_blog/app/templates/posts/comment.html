@@ -1,0 +1,46 @@
+{% extends "common/base.html" %}
+{% from "common/macro.html" import pagination_show %}
+{% block title %}我的评论{% endblock %}
+
+{% block page_content %}
+
+    <div class="media">
+    <div class="media-left">
+    <a href="#">
+      <img class="media-object; img-circle" src="{{ url_for('static', filename='upload/'+ p.user.icon) }}"
+                 alt="头像" style="width: 80px; height: 80px;float: left">
+    </a>
+    </div>
+    <div class="media-body">
+    <h4  class="media-heading" style="color: salmon">用户名：{{ p.user.username }}</h4>
+    {{ p.content }}
+      <div style="float: right;color: crimson" >{{ moment(p.timestamp).fromNow() }}</div>
+    </div>
+    </div>
+    {{ wtf.quick_form(form) }}
+     {% for p in comment %}
+     <div class="media">
+    <div class="media-left">
+    <a href="#">
+      <img class="media-object; img-circle" src="{{ url_for('static', filename='upload/'+ p.user.icon) }}"
+                 alt="头像" style="width: 80px; height: 80px;float: left">
+    </a>
+    </div>
+    <div class="media-body">
+    <h4  class="media-heading" style="color: salmon">用户名：{{ p.user.username }}</h4>
+    {{ p.content }}
+      <div style="float: right;color: crimson" >{{ moment(p.timestamp).fromNow() }}</div>
+    </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+{{ pagination_show(pagination,'main.index') }}
