@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" >
+        <h2 style="text-align: left;font-size: 18px">{{ article.title }}</h2>
+
+        {#    正文#}
+        <div >
+            <div style="float: right">
+                <a href="/editor/?aid={{ article.id }}" style=" text-decoration: none;">编辑</a>
+                <a href="/delete/?aid={{ article.id }}" style=" text-decoration: none;">删除</a>
+            </div>
+            {{article.content | linebreaks}}
+            <span class="data" style="color: #375EAB">{{ article.data }}</span>
+        </div>
+{#        标签#}
+        <div>
+                {% for tag in tags %}
+                <span><a>{{ tag.name }}</a></span>
+                {% endfor %}
+        </div>
+        <hr>
+{#        评论#}
+        <div>
+            {% for c in comments %}
+                <div>
+                    <div>@ {{ c.name }}回复：</div>
+                    <span class="data">{{ c.data }}</span>
+                    <div>{{ c.content | linebreaks }}</div>
+                </div>
+                <hr>
+            {% endfor %}
+
+        </div>
+{#    发表评论#}
+        <form method="post" action="/comment/">
+            {% csrf_token %}
+
+            <div>
+                <textarea class="content" rows="3" cols="30" name="content"></textarea>
+            </div>
+            <div>评论人：<input type="text" name="name"></div>
+{#            <div style="color: rebeccapurple">评论人:{{ user.nickname }}</div>#}
+            <input type="hidden" name="aid" value="{{article.id}}">
+            <input type="submit" name="发表评论">
+        </form>
+    </div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if errors %}
+    {{ errors|safe }}
+    {% endif %}
+    <form action="/register/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        nickname: <input type="text" name="nickname"><br>
+        password: <input type="password" name="password"><br>
+        icon: <input type="file" name="icon"><br>
+        age: <input type="text" name="age" style="width: 30px"><br>
+        sex: <input value="1" type="radio" checked="checked" name="sex" />男<input  value="0" type="radio"  name="sex"/>女<br>
+        <input type="submit" name="submit" value="点击注册"><br>
+    </form>
+
+
+
+{% endblock %}

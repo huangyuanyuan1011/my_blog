@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% for a in articles %}
+    <div class="home">
+        <span class="date">{{ a.data }}</span>
+        <a href="/article/?aid={{ a.id }}">{{ a.title }}</a>
+        <a  class="btn btn-primary  abled" role="button" href="/article/?aid={{ a.id }}" style="float: right;margin-top: -10px">评论</a>
+    </div>
+    <hr>
+{% endfor %}
+<div class="home">
+    {% for page in pages %}
+        <a href="/index/?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+    {% endfor %}
+</div>
+<hr>
+    {% if top5 %}
+        <div style="font-size: 18px;color: red">最热榜</div>
+        {% for a,n in top5 %}
+            <div>
+                <a href="/article/?aid={{ a.id }}">标题 : {{ a.title }}</a>
+                <span style="float: right">访问数：{{ n }}</span>
+{#                <span>{{ a.data }}</span>#}
+
+            </div>
+        {% endfor %}
+    <hr>
+    {% endif %}
+{% endblock %}

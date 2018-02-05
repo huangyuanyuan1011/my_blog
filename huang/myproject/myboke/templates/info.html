@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="alert alert-success" role="alert">
+  <a href="#" class="alert-link">nickname : {{ user.nickname }}</a>
+</div>
+<div class="alert alert-info" role="alert">
+  <a href="#" class="alert-link">icon : <img src="{{ MEDIA_URL }}{{ user.icon }}" width="50px" height="50px"></a>
+    <hr>
+    <form method="post" action="/change_icon/" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="icons">
+        <input type="submit" value="上传修改">
+    </form>
+
+</div>
+<div class="alert alert-warning" role="alert">
+  <a href="#" class="alert-link">age : {{user.age}}</a>
+</div>
+<div class="alert alert-danger" role="alert">
+  <a href="#" class="alert-link">sex : {{user.sex}}</a>
+</div>
+
+
+
+
+
+{% endblock %}

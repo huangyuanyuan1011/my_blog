@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="float: left">
+        <form method="post" action="/editor/">
+            {% csrf_token %}
+            <div >
+               标题 ： <input type="text" name="title" value="{{ article.title }}">
+            </div>
+            <hr>
+            <div>
+                <textarea name="content" rows="14" cols="100">{{ article.content }}</textarea>
+            </div>
+            <hr>
+            <div >Author : <input type="text" name="tags" value="{{ tags}}"></div><hr>
+            <input type="hidden" name="aid" value="{{ article.id }}">
+            <input type="submit" name="提交">
+
+
+
+        </form>
+
+
+
+    </div>
+
+
+
+{% endblock %}
